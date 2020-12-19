@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login/Registration</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>log in</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <main style="display: flex; align-items: start; justify-content: space-evenly">
+        <h1>Log In</h1>
+        <div class="row g-3 align-items-center">
+              <form class="px-4 py-3" action="/log_in" method="post">
+                  {% csrf_token %}
+                <div class="mb-3">
+                  <label class="form-label">Email address</label>
+                  <input type="email" class="form-control" name="email" placeholder="email@example.com" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Password</label>
+                  <input type="password" class="form-control" name="pw" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-success">Log in</button>
+              </form>
+        </div>
+        <h1>Register</h1>
+        <div class="row g-3 align-items-center col-auto">
+
+              <form class="px-4 py-3 " action="/register" method="post">
+                  {% csrf_token %}
+                <div class="mb-3">
+                  <label class="form-label">First Name: </label>
+                  <input type="text" name="first_name" class="form-control" placeholder="First Name" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Last Name: </label>
+                  <input type="text" name="last_name" class="form-control" placeholder="Last Name" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Email address</label>
+                  <input type="email" name="email" class="form-control" placeholder="email@example.com" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Birth Date: </label>
+                  <input type="date" name="birth_date" class="form-control" placeholder="Birth Date" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Password</label>
+                  <input type="password" name="pw" class="form-control" placeholder="Password" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Confirm PW </label>
+                  <input type="password" name="pw_cn"  class="form-control" placeholder="Confirm PW" required>
+                </div>
+                <button type="submit" class="btn btn-info">Register</button>
+              </form>
+        </div>
+    </main>
+    <footer>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </footer>
+</body>
+</html>
+</body>
+</html>

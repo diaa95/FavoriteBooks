@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Book's details</title>
+    </head>
+    <body>
+        <header style="display: flex; justify-content: space-between; border-bottom: 1px solid black;">
+            <h1>Welcome, {{this_user.first_name}} !</h1>
+            <a href="/log_out">Log Out</a>
+        </header>
+        <main style="display:flex; justify-content:space-evenly;">
+            <div>
+                <h3>Title: {{book.title}}</h3>
+                <p>Added by: {{book.uploaded_by.first_name}} {{book.uploaded_by.last_name}})</p>
+                <p>Description: {{book.desc}}</p>
+                <p>Added on: {{book.updated_at}}</p>
+                <p>Last Updated on: {{book.updated_at}}</p>
+            </div>
+            <div>
+                <h3>Users Who Like This Book:</h3>
+                    <ul>
+                        {% for user in book.users_who_like.all %}
+                            <li>{{ user.first_name }} {{ user.last_name }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% if book not in this_user.liked_books.all %}
+                    <a href="/add_fav/{{book.id}}/{{this_user.id}}">Add to Favorites</a>
+                    {% endif %}
+                    {% if book in this_user.liked_books.all %}
+                    <a href="/UnFavorite/{{book.id}}/{{this_user.id}}">UnFavorite</a>
+                    {% endif %}
+            </div>
+        </main>
+    </body>
+</html>

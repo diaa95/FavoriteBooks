@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Edit Book</title>
+    </head>
+    <body>
+        <header style="display: flex; justify-content: space-between; border-bottom:1p solid black;">
+            <h1>Welcome, {{this_user.first_name}} !</h1>
+            <a href="/log_out">Log Out</a>
+        </header>
+
+
+        <form action="/books/{{this_book.id}}/{{this_user.id}}/update" method="post">
+            {% csrf_token %}
+            <label>Title: <input type="text" name="title" value=""></label>
+            <p>Added by: {{this_book.uploaded_by.first_name}} {{this_book.uploaded_by.last_name}}</p>
+            <p>Added on: {{this_book.updated_at}}</p>
+            <p>Last Updated on: {{this_book.updated_at}}</p>
+            <label>Description: <input type="text" name="desc"></label>
+            <button type="submit">Update</button>
+        </form>
+        <a href="/books/{{this_book.id}}/{{this_user.id}}/destroy"><button type="button">Delete</button></a>
+
+
+        <h3>Users Who Like This Book:</h3>
+        <ul>
+        {% for user in this_book.users_who_like.all %}
+            <li>{{ user.first_name }} {{ user.last_name }}</li>
+        {% endfor %}
+        </ul>
+
+
+        {% if this_book not in this_user.liked_books.all %}
+        <a href="/add_fav/{{this_book.id}}/{{this_user.id}}">Add to Favorites</a>
+        {% endif %}
+        {% if this_book in this_user.liked_books.all %}
+        <a href="/UnFavorite/{{this_book.id}}/{{this_user.id}}">UnFavorite</a>
+        {% endif %}
+    </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Favorite Books</title>
+</head>
+<body>
+    <header style="display: flex; justify-content: space-between; border-bottom:1p solid black;">
+        <h1>Welcome, {{this_user.first_name}} !</h1>
+        <a href="/user_page/{{this_user.id}}">Your Favorites</a>
+        <a href="/log_out">Log Out</a>
+    </header>
+    <main>
+        <div>
+            <h2>Add Book</h2>
+            <form action="/add_book/{{this_user.id}}" method="post">
+                    {% csrf_token %}
+                    <label>Title: <input type="text" name="title"></label>
+                    <label>Description: <input type="text" name="desc"></label>
+                    <button type="submit">Add</button>
+            </form>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <div>
+        {% if all_books %}
+            <ul class="book">
+                {% for book in all_books %}
+                    <li>
+                        <a href="/book_details/{{this_user.id}}/{{book.id}}">{{ book.title }}</a>
+                        <p>(added by {{book.uploaded_by.first_name}})</p>
+                        {% if book in this_user.liked_books.all %}
+                        <p>this is one of your favorites</p>
+                        {% endif %}
+                        {% if book not in this_user.liked_books.all %}
+                        <a href="/add_fav/{{book.id}}/{{this_user.id}}">Add to Favorites</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        </div>
+    </main>
+</body>
+</html>
